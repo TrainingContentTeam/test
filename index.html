@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>Identity Theft Prevention – Pre-Course Quiz</title>
+
 <style>
   :root {
     --green: #2e7d32;
@@ -19,17 +20,18 @@
     color: #222;
   }
 
+  /* Sticky Header */
   header {
     position: sticky;
     top: 0;
-    background: white;
+    background: #fff;
     border-bottom: 1px solid #ddd;
     padding: 16px 24px;
     z-index: 10;
   }
 
   header h1 {
-    margin: 0 0 8px 0;
+    margin: 0 0 8px;
     font-size: 20px;
   }
 
@@ -66,8 +68,9 @@
     padding: 0 24px;
   }
 
+  /* Question Cards */
   .card {
-    background: white;
+    background: #fff;
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
@@ -95,8 +98,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: var(--dark-gray);
     font-size: 14px;
+    color: var(--dark-gray);
   }
 
   .indicator.completed {
@@ -109,6 +112,7 @@
     font-weight: 500;
   }
 
+  /* Buttons */
   .buttons {
     margin-top: 16px;
     display: flex;
@@ -120,8 +124,8 @@
     font-size: 14px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    background: #fff;
     cursor: pointer;
-    background: white;
     transition: background 0.2s ease, border-color 0.2s ease;
   }
 
@@ -135,6 +139,7 @@
     cursor: not-allowed;
   }
 
+  /* Explanation */
   .explanation {
     margin-top: 16px;
     background: var(--light-green);
@@ -157,13 +162,15 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Reset */
   .reset-container {
     margin: 24px 0;
     text-align: right;
   }
 
+  /* Completion */
   .completion {
-    background: white;
+    background: #fff;
     border-radius: 8px;
     padding: 32px;
     text-align: center;
@@ -180,6 +187,7 @@
   }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -251,7 +259,8 @@ questions.forEach((item, index) => {
     </div>
     <div class="explanation" id="exp-${index}">
       💡 <span>Why this matters:</span> ${item.r}
-    </div>`;
+    </div>
+  `;
   quizEl.appendChild(card);
 });
 
@@ -262,17 +271,12 @@ function answer(index, agree) {
   const card = quizEl.children[index];
   card.classList.add("completed");
 
-  const indicator = document.getElementById(`indicator-${index}`);
-  indicator.classList.add("completed");
+  document.getElementById(`indicator-${index}`).classList.add("completed");
 
   const agreeBtn = document.getElementById(`agree-${index}`);
   const disagreeBtn = document.getElementById(`disagree-${index}`);
 
-  if (agree) {
-    agreeBtn.classList.add("selected");
-  } else {
-    disagreeBtn.classList.add("selected");
-  }
+  (agree ? agreeBtn : disagreeBtn).classList.add("selected");
 
   agreeBtn.disabled = true;
   disagreeBtn.disabled = true;
@@ -283,8 +287,10 @@ function answer(index, agree) {
 
 function updateProgress() {
   const answered = answers.filter(a => a !== null).length;
-  document.getElementById("progressText").textContent = `${answered} of ${questions.length} completed`;
-  document.getElementById("progressFill").style.width = `${(answered / questions.length) * 100}%`;
+  document.getElementById("progressText").textContent =
+    `${answered} of ${questions.length} completed`;
+  document.getElementById("progressFill").style.width =
+    `${(answered / questions.length) * 100}%`;
 
   if (answered > 0) {
     document.getElementById("resetContainer").style.display = "block";
@@ -314,7 +320,9 @@ function showCompletion() {
 }
 
 function resetQuiz() {
-  if (!confirm("Reset Quiz?\n\nThis will clear all your answers and start the quiz from the beginning. This action cannot be undone.")) return;
+  if (!confirm(
+    "Reset Quiz?\n\nThis will clear all your answers and start the quiz from the beginning. This action cannot be undone."
+  )) return;
   location.reload();
 }
 </script>
